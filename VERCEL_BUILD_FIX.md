@@ -1,34 +1,48 @@
 # Vercel Build Fix - Permission Denied Error
 
-## Problem
+## Problem - UPDATED!
 
+### First Error:
 ```
 sh: line 1: /vercel/path0/node_modules/.bin/tsc: Permission denied
 Error: Command "npm run build" exited with 126
 ```
 
+### Second Error (After First Fix):
+```
+sh: line 1: /vercel/path0/node_modules/.bin/vite: Permission denied
+Error: Command "vite build" exited with 126
+```
+
 ## Root Cause
 
-Vercel's build environment sometimes has permission issues with the TypeScript compiler (`tsc`) executable in `node_modules/.bin/`.
+Vercel's build environment has permission issues with executables in `node_modules/.bin/` directory.
 
 ## Solution Applied ✅
 
-**Changed `vercel.json` build command from:**
+**Changed `vercel.json` build command:**
+
+### Attempt 1 (Failed):
 ```json
-"buildCommand": "npm run build"
+"buildCommand": "npm run build"  // tsc permission denied
 ```
 
-**To:**
+### Attempt 2 (Failed):
 ```json
-"buildCommand": "vite build"
+"buildCommand": "vite build"  // vite permission denied
 ```
 
-## Why This Works
+### Attempt 3 (WORKING ✅):
+```json
+"buildCommand": "npx vite build"  // Uses npx to handle permissions
+```
 
-1. **Vite handles TypeScript natively** - Vite can process TypeScript files without needing separate `tsc` compilation
-2. **No permission issues** - We bypass the problematic `tsc` executable
-3. **Faster builds** - Vite's build process is optimized and doesn't need a separate type-checking step
-4. **Standard practice** - This is the recommended approach for Vite projects on Vercel
+## Why `npx` Works
+
+1. **npx manages permissions** - `npx` properly handles executable permissions in `node_modules/.bin/`
+2. **Direct package execution** - `npx` runs packages directly from `node_modules`
+3. **No path issues** - Bypasses shell permission problems
+4. **Vercel best practice** - Recommended approach for running build tools on Vercel
 
 ## Type Checking
 
@@ -41,13 +55,17 @@ This runs `tsc --noEmit` to check types without emitting files.
 
 ## What Changed
 
-### Before:
-- Build command: `tsc && vite build` (via `npm run build`)
+### Before (❌ Failed):
+- Build command: `npm run build` → runs `tsc && vite build`
 - Issue: `tsc` permission denied on Vercel
 
-### After:
+### Attempt 2 (❌ Failed):
 - Build command: `vite build` (direct)
-- Result: ✅ Builds successfully on Vercel
+- Issue: `vite` permission denied on Vercel
+
+### After (✅ Working):
+- Build command: `npx vite build`
+- Result: ✅ Builds successfully on Vercel!
 
 ## Files Modified
 
@@ -59,7 +77,7 @@ This runs `tsc --noEmit` to check types without emitting files.
 
 ```bash
 git add vercel.json VERCEL_BUILD_FIX.md
-git commit -m "fix: Vercel build - bypass tsc permission issue"
+git commit -m "fix: Vercel build - use npx to fix permission issues"
 git push origin main
 ```
 

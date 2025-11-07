@@ -16,7 +16,7 @@ Write-Host ""
 
 # Commit
 Write-Host "[2/3] Committing fix..." -ForegroundColor Yellow
-git commit -m "fix: Vercel build - bypass tsc permission issue"
+git commit -m "fix: Vercel build - use npx to fix permission issues"
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[WARNING] Nothing to commit or commit failed" -ForegroundColor Yellow
