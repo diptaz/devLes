@@ -1,0 +1,21 @@
+{
+  "name": "LesCatur - Platform Kursus Catur Indonesia",
+  "short_name": "LesCatur",
+  "description": "Platform kursus catur komprehensif dengan video pembelajaran, e-book, kelas virtual, dan AI trainer",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#bfdbfe",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "games"],
+  "lang": "id-ID",
+  "dir": "ltr"
+}

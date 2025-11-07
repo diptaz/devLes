@@ -1,0 +1,12 @@
+# robots.txt for LesCatur
+# https://www.robotstxt.org/
+
+User-agent: *
+Allow: /
+
+# Disallow admin or internal pages if any
+# Disallow: /admin/
+# Disallow: /api/
+
+# Sitemap
+# Sitemap: https://lescatur.vercel.app/sitemap.xml

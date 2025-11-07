@@ -1,0 +1,117 @@
+/* 
+ * Mobile Responsive System - 3 Stage Adaptive Layout
+ * Stage 1 (> 692px): Full text labels
+ * Stage 2 (421-692px): Short text labels
+ * Stage 3 (≤ 420px): Icon only
+ */
+
+/* Base styles - ensure tabs are scrollable on smaller screens */
+@media (max-width: 768px) {
+  /* Ensure tabs are scrollable - override grid layout */
+  [role="tablist"] {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 0.25rem;
+    padding: 0.25rem;
+  }
+  
+  [role="tablist"]::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Make tab triggers more compact with horizontal padding only */
+  [role="tab"] {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 0.875rem !important;
+    padding: 0.5rem 0.75rem !important;
+    min-width: fit-content;
+  }
+  
+  /* Make icons slightly smaller */
+  [role="tab"] svg {
+    width: 1rem !important;
+    height: 1rem !important;
+  }
+  
+  /* Adjust card spacing */
+  .card {
+    margin-bottom: 1rem;
+  }
+  
+  /* Better grid spacing but not for tabs */
+  .grid:not([role="tablist"]) {
+    gap: 0.75rem !important;
+  }
+}
+
+/* Stage 1: Desktop - Show full text (> 692px) */
+@media (min-width: 693px) {
+  .tab-text-full {
+    display: inline !important;
+  }
+  
+  .tab-text-short {
+    display: none !important;
+  }
+}
+
+/* Stage 2: Tablet/Medium - Show short text (421-692px) */
+@media (min-width: 421px) and (max-width: 692px) {
+  .tab-text-full {
+    display: none !important;
+  }
+  
+  .tab-text-short {
+    display: inline !important;
+  }
+  
+  /* Adjust tab padding for shorter text */
+  [role="tab"] {
+    padding: 0.5rem 0.625rem !important;
+  }
+}
+
+/* Stage 3: Mobile Small - Icon only (≤ 420px) */
+@media (max-width: 420px) {
+  /* Hide all text labels, show icons only */
+  .tab-text-full,
+  .tab-text-short {
+    display: none !important;
+  }
+  
+  /* Compact padding for icon-only mode */
+  [role="tab"] {
+    padding: 0.5rem 0.625rem !important;
+    justify-content: center !important;
+  }
+}
+
+/* Header responsive adjustments - also 3 stages */
+@media (min-width: 693px) {
+  .header-text {
+    display: inline !important;
+  }
+}
+
+@media (min-width: 421px) and (max-width: 692px) {
+  .header-text {
+    display: inline !important;
+  }
+}
+
+@media (max-width: 420px) {
+  /* Hide header text, show icons only */
+  .header-text {
+    display: none !important;
+  }
+  
+  /* Adjust button padding when text is hidden */
+  header button:not([role="tab"]) {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+}
